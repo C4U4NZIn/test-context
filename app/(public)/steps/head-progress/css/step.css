@@ -1,0 +1,14 @@
+.BarProgressContainer{
+ display:flex;
+ flex-direction: row;
+ justify-content: space-around;
+ align-items: center;
+
+}
+
+.active{
+ background-color: red;
+}
+.stepDefault{
+background-color: #fff;
+}
