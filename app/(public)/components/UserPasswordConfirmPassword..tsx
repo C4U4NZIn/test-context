@@ -1,9 +1,9 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { Input } from '../components/components-ui/Input'
+import { Input } from './components-ui/Input'
 import { RegistrationFormSchemaProps } from '../Forms/RegistrationForm'
 
-export function PaymentInformation() {
+export function UserPasswordConfirmPassword() {
   const {
     control,
     formState: { errors },

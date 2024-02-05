@@ -1,11 +1,11 @@
-import { RegistrationForm} from "./sign-in/SignIn";
+import { RegistrationFormSignIn } from "./sign-in/SignIn";
 
 
 export default function Home() {
   return (
    <>
 
-   <RegistrationForm/>
+   <RegistrationFormSignIn/>
 
    </>
   ); 

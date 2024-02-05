@@ -1,9 +1,9 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { Input } from '../components/components-ui/Input'
+import { Input } from './components-ui/Input'
 import { RegistrationFormSchemaProps } from '../Forms/RegistrationForm'
 
-export function PersonalInformation() {
+export function UserEmailTel() {
   const {
     control,
     formState: { errors },
@@ -11,38 +11,40 @@ export function PersonalInformation() {
 
   return (
     <fieldset
-      
+      className="space-y-4"
+      data-testid="shipping-address-component-container"
     >
       <legend
-       
+        className="text-xl font-semibold mx-auto"
+        data-testid="shipping-address-component-title"
       >
-        Step One
+        Step Two
       </legend>
       <Controller
-        name='usernameNickname.username'
+        name='userEmailTel.email'
         defaultValue=""
         control={control}
         render={({ field }) => (
           <Input
             {...field}
             type="text"
-            label="Name"
-            errorMessage={errors?.usernameNickname?.username?.message}
-            
+            label="Email"
+            errorMessage={errors?.userEmailTel?.email?.message}
+           
           />
         )}
       />
       <Controller
-        name='usernameNickname.nickname'
+        name='userEmailTel.phone'
         defaultValue=""
         control={control}
         render={({ field }) => (
           <Input
             {...field}
             type="text"
-            label="Nickname"
-            errorMessage={errors?.usernameNickname?.nickname?.message}
-           
+            label="Telefone"
+            errorMessage={errors?.userEmailTel?.phone?.message}
+            
           />
         )}
       />

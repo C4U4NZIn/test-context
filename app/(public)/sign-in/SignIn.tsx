@@ -4,9 +4,9 @@ import { FormProvider, useForm } from 'react-hook-form'
 
 import { Button } from '../components/Button/Button'
 
-import { ShippingAddress } from '../components/UserPasswordInformation'
-import { PaymentInformation } from '../components/UserEmailTelInformation'
-import { PersonalInformation } from '../components/UserNameInformation'
+import { UserEmailTel } from '../components/UserEmailTel'
+import { UserPasswordConfirmPassword } from '../components/UserPasswordConfirmPassword.'
+import { UsernameNickname } from '../components/UsernameNickname'
 
 import {
   RegistrationFormSchemaProps,
@@ -14,7 +14,7 @@ import {
   registrationFormSchema,
 } from '../Forms/RegistrationForm'
 
-export function RegistrationForm() {
+export function RegistrationFormSignIn() {
 
 
   const formMethods = useForm<RegistrationFormSchemaProps>({
@@ -32,9 +32,9 @@ export function RegistrationForm() {
   } = formMethods
 
   const formType = watch('formType')
-  const formTypeIsPersonalInformation = formType === 'usernameNickname'
-  const formTypeIsShippingAddress = formType === 'userEmailTel'
-  const formTypeIsPaymentInformation = formType === 'userPasswordConfirmPassword'
+  const formTypeIsUsernameNickname = formType === 'usernameNickname'
+  const formTypeIsUserEmailTel = formType === 'userEmailTel'
+  const formTypeIsUserPasswordConfirmPassword = formType === 'userPasswordConfirmPassword'
 
   function setFormType(formType: RegistrationFormTypeEnum) {
     console.log(formType);
@@ -62,16 +62,16 @@ export function RegistrationForm() {
       <form
         onSubmit={handleSubmit(handleNextFormType)}
       >
-        {formTypeIsPersonalInformation && <PersonalInformation />}
-        {formTypeIsShippingAddress && <ShippingAddress />}
-        {formTypeIsPaymentInformation && <PaymentInformation />}
+        {formTypeIsUsernameNickname && <UsernameNickname />}
+        {formTypeIsUserEmailTel && <UserEmailTel />}
+        {formTypeIsUserPasswordConfirmPassword  && <UserPasswordConfirmPassword />}
 
         <Button
           type="submit"
           loading={isSubmitting}
          
         >
-          {formTypeIsPaymentInformation ? 'Submit' : 'Next'}
+          {formTypeIsUserPasswordConfirmPassword  ? 'Submit' : 'Next'}
         </Button>
       </form>
     </FormProvider>

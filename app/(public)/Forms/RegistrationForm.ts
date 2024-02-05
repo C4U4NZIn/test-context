@@ -11,7 +11,7 @@ import {
   UserPasswordConfirmPasswordSchemaProps,
   userPasswordConfirmPasswordSchema,
 } from '../Forms/schemaUserEmailTelInformation'
-import { PaymentInformation } from '../components/UserEmailTelInformation'
+import { PaymentInformation } from '../components/UserPasswordConfirmPassword.'
 
 export enum RegistrationFormTypeEnum {
   UsernameNickname = 'usernameNickname',
