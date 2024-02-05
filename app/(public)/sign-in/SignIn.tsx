@@ -1,127 +1,79 @@
 'use client';
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FormProvider, useForm } from 'react-hook-form'
+
+import { Button } from '../components/Button/Button'
+
+import { ShippingAddress } from '../components/UserPasswordInformation'
+import { PaymentInformation } from '../components/UserEmailTelInformation'
+import { PersonalInformation } from '../components/UserNameInformation'
 
 import {
+  RegistrationFormSchemaProps,
   RegistrationFormTypeEnum,
   registrationFormSchema,
-  registrationFormSchemaProps
-} from '../Forms/RegistrationForm';
-import { useForm , FormProvider } from 'react-hook-form';
-import * as zod from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+} from '../Forms/RegistrationForm'
 
-import { useState } from 'react';
-import { Button } from '../components/Button/Button';
+export function RegistrationForm() {
 
 
-import UserNameInformation from '../components/UserNameInformation';
-import UserEmailTelInformation from '../components/UserEmailTelInformation';
-import UserPasswordInformation from '../components/UserPasswordInformation';
+  const formMethods = useForm<RegistrationFormSchemaProps>({
+    resolver: zodResolver(registrationFormSchema),
+    defaultValues: {
+      formType: RegistrationFormTypeEnum.UsernameNickname,
+    },
+  })
 
- 
+  const {
+    watch,
+    getValues,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = formMethods
 
-export const SignInFormRegister = () =>{
+  const formType = watch('formType')
+  const formTypeIsPersonalInformation = formType === 'usernameNickname'
+  const formTypeIsShippingAddress = formType === 'userEmailTel'
+  const formTypeIsPaymentInformation = formType === 'userPasswordConfirmPassword'
 
+  function setFormType(formType: RegistrationFormTypeEnum) {
+    console.log(formType);
+    formMethods.setValue('formType', formType)
+  }
 
-    
+  function handleNextFormType() {
+    console.log(formType);
+    switch (formType) {
+      case 'usernameNickname':
+        setFormType(RegistrationFormTypeEnum.UserEmailTel)
+        break
+      case 'userEmailTel':
+        setFormType(RegistrationFormTypeEnum.UserPasswordConfirmPassword)
+        break
+      case 'userPasswordConfirmPassword':
+        const UserData = getValues()
+        console.log('submit', UserData)
+        break
+    }
+  }
 
-    const formMethods = useForm<registrationFormSchemaProps>({
-       resolver:zodResolver(registrationFormSchema),
-       defaultValues:{
-        formType:RegistrationFormTypeEnum.UserNameInformation,
-       }
-    });
+  return (
+    <FormProvider {...formMethods}>
+      <form
+        onSubmit={handleSubmit(handleNextFormType)}
+      >
+        {formTypeIsPersonalInformation && <PersonalInformation />}
+        {formTypeIsShippingAddress && <ShippingAddress />}
+        {formTypeIsPaymentInformation && <PaymentInformation />}
 
-      const {
-         watch,
-         getValues,
-         handleSubmit,
-         formState:{ isSubmitting }
-       } = formMethods
-
-       const formType = watch('formType');
-       const formTypeIsUserName = formType === 'userNameInformation'
-       const formTypeIsUserEmailTel = formType === 'userEmailTelInformation'
-       const formTypeIsUserPassword = formType === 'userPasswordInformation'
-      {/** 
-      function onHandleNextAndSubmit(data:userFormInput){
-      console.log(data);
-      }
-    
-    */}
-
-
-
-    function setFormType(formType:RegistrationFormTypeEnum){
-      console.log(formType);
-      console.log(formMethods);
-      formMethods.setValue('formType',formType);
-      }
-
-       function onHandleSubmitAndNext(){
-        console.log(formType);
-        console.log(formMethods);
-        switch(formType){
-
-          case 'userNameInformation':
-            setFormType(RegistrationFormTypeEnum.UserEmailTelInformation);
-            break
-          case 'userEmailTelInformation':
-            setFormType(RegistrationFormTypeEnum.UserPasswordInformation);
-            break
-          case 'userPasswordInformation':
-            console.log('submit', getValues());
-            break
-          
-
-        }
-
-        
-
-       }
-
-       //adiciona novas informações por schema. Por exemplo, se ela estiver no Name ent ela vai adicionar o name ao formMethods
-      //chamada no switch da função onHandleNextAndSubmit que , obviamente, estará no meu mano onSubmit
-       
-      
-    
- 
-      
-    
-        return(
-         <div>
-      
-      
-
-   <FormProvider {...formMethods}>
-
-  <form onSubmit={handleSubmit(onHandleSubmitAndNext)}>
-          
-          
-            {formTypeIsUserName && <UserNameInformation/>}
-            {formTypeIsUserEmailTel && <UserEmailTelInformation/>}
-            {formTypeIsUserPassword && <UserPasswordInformation/>}
-
-            {/**
-             * 
-            <Button
-           type="submit"
-           loading={isSubmitting}
+        <Button
+          type="submit"
+          loading={isSubmitting}
+         
         >
-          {formTypeIsUserPassword ? 'Submit' : 'Next'}
+          {formTypeIsPaymentInformation ? 'Submit' : 'Next'}
         </Button>
-            */}
-            
-       
-            <button type="submit"><h1>next</h1></button>
-          
-          
-          
-   </form>
-
-   </FormProvider>
-
-
-     </div>
-
-        )
+      </form>
+    </FormProvider>
+  )
 }

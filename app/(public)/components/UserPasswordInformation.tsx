@@ -1,84 +1,54 @@
-import { Controller , useFormContext } from "react-hook-form";
-import {registrationFormSchemaProps } from "../Forms/RegistrationForm";
-import { Input } from '../components/components-ui/Input';
+import { Controller, useFormContext } from 'react-hook-form'
 
-export default function UserPasswordInformation() {
+import { Input } from '../components/components-ui/Input'
+import { RegistrationFormSchemaProps } from '../Forms/RegistrationForm'
 
-   const {
-   control,
-   formState:{errors}
-   } = useFormContext<registrationFormSchemaProps>();
+export function ShippingAddress() {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<RegistrationFormSchemaProps>()
 
-
-
-    return (
-        <div>
-
-        <fieldset>
-
-       <legend>Password</legend>
-
-         
-       <Controller
-         name="userPasswordInformation.password"
-         defaultValue=""
-         control={control}
-         render={({field})=> (
-            <Input
+  return (
+    <fieldset
+      className="space-y-4"
+      data-testid="shipping-address-component-container"
+    >
+      <legend
+        className="text-xl font-semibold mx-auto"
+        data-testid="shipping-address-component-title"
+      >
+        Step Two
+      </legend>
+      <Controller
+        name='userEmailTel.email'
+        defaultValue=""
+        control={control}
+        render={({ field }) => (
+          <Input
             {...field}
-            type="password"
-            label="Password"
-            errorMessage={errors?.userPasswordInformation?.password?.message}
+            type="text"
+            label="Email"
+            errorMessage={errors?.userEmailTel?.email?.message}
            
-            />         
-          )
-         }
-         
-         />
-        
-        <legend>Confirm Password</legend>
-
-          
-        <Controller
-         name="userPasswordInformation.ConfirmPassword"
-         defaultValue=""
-         control={control}
-         render={({field})=> (
-            <Input
+          />
+        )}
+      />
+      <Controller
+        name='userEmailTel.phone'
+        defaultValue=""
+        control={control}
+        render={({ field }) => (
+          <Input
             {...field}
-            type="password"
-            label="Confirm Password"
-            errorMessage={errors?.userPasswordInformation?.ConfirmPassword?.message}
-           
-            />         
-          )
-         }
-         
-         />
-
-
-
-
-        </fieldset>
-
-
-
-
-            {/**
-         <div>
-                <label><h6>Password</h6></label>
-                <input 
-                type="password" 
-                //{...register('password')}
-                />
-                <label><h6>Tel</h6></label>
-                <input 
-                type='password'
-               // {...register('ConfirmPassword')}
-                />
-                </div>
-             * 
-             */}
-        </div>
-    )
+            type="text"
+            label="Telefone"
+            errorMessage={errors?.userEmailTel?.phone?.message}
+            
+          />
+        )}
+      />
+     
+    </fieldset>
+  )
 }

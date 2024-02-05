@@ -1,48 +1,42 @@
-import * as zod from 'zod';
+import { z } from 'zod'
+import {
+  UsernameNicknameFormSchemaProps,
+  usernameNicknameSchema,
+} from '../Forms/schemaUserNameInformation'
+import {
+  UserEmailTelFormSchemaProps,
+  userEmailTelSchema,
+} from '../Forms/schemaUserPasswordInformation'
+import {
+  UserPasswordConfirmPasswordSchemaProps,
+  userPasswordConfirmPasswordSchema,
+} from '../Forms/schemaUserEmailTelInformation'
+import { PaymentInformation } from '../components/UserEmailTelInformation'
 
-import { 
-    schemaUserEmailTelInformation , 
-    userEmailTelInformationSchemaProps } 
-    from './schemaUserEmailTelInformation';
-import { 
-    schemaUserNameInformation ,
-    userNameInformationSchemaProps } 
-    from './schemaUserNameInformation';
-import { 
-    schemaUserPasswordInformation ,
-    userPasswordInformationsSchemaProps } 
-    from './schemaUserPasswordInformation';
+export enum RegistrationFormTypeEnum {
+  UsernameNickname = 'usernameNickname',
+  UserEmailTel = 'userEmailTel',
+  UserPasswordConfirmPassword = 'userPasswordConfirmPassword',
+}
 
-// I just doing this , cuz it´s prettier than other forms to do this
-    export enum RegistrationFormTypeEnum {
-        UserNameInformation = 'userNameInformation',
-        UserEmailTelInformation = 'userEmailTelInformation',
-        UserPasswordInformation = 'userPasswordInformation',
-     }
+export const registrationFormSchema = z.discriminatedUnion('formType', [
+  z.object({
+    formType: z.literal(RegistrationFormTypeEnum.UsernameNickname),
+    usernameNickname:usernameNicknameSchema,
+  }),
+  z.object({
+    formType: z.literal(RegistrationFormTypeEnum.UserEmailTel),
+    userEmailTel:userEmailTelSchema,
+  }),
+  z.object({
+    formType: z.literal(RegistrationFormTypeEnum.UserPasswordConfirmPassword),
+    userPasswordConfirmPassword: userPasswordConfirmPasswordSchema,
+  }),
+])
 
-
-   // t=This object is the schema ealier just a little bit stronger
-   // what I mean is that registrationForm is a schema with the field.
-   //However, its a filter fields with formType
-    export  const registrationFormSchema = zod.discriminatedUnion('formType',[
-         
-     zod.object({
-     formType: zod.literal(RegistrationFormTypeEnum.UserNameInformation),
-     UserNameInformation:schemaUserNameInformation,
-     }),
-     zod.object({
-     formType: zod.literal(RegistrationFormTypeEnum.UserEmailTelInformation),
-     UserEmailTelInformation: schemaUserEmailTelInformation
-     }),
-     zod.object({
-     formType: zod.literal(RegistrationFormTypeEnum.UserPasswordInformation),
-     UserPasswordInformation : schemaUserPasswordInformation
-     })
-    ]);
-    
-    export type registrationFormSchemaProps = {
-        formType: RegistrationFormTypeEnum
-        userNameInformation: userNameInformationSchemaProps
-        userEmailTelInformation:userEmailTelInformationSchemaProps
-        userPasswordInformation:userPasswordInformationsSchemaProps
-    }
+export type RegistrationFormSchemaProps = {
+  formType: RegistrationFormTypeEnum
+  usernameNickname: UsernameNicknameFormSchemaProps
+  userEmailTel:UserEmailTelFormSchemaProps
+  userPasswordConfirmPassword:UserPasswordConfirmPasswordSchemaProps
+}

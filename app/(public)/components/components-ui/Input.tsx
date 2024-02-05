@@ -1,34 +1,34 @@
-import React from "react";
-import styles from '../css/input-styles.module.css'
+import * as React from 'react'
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement>{
+
+
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string
-  errorMessage?:string
+  errorMessage?: string
 }
 
-const Input = React.forwardRef<HTMLInputElement , InputProps>(({className,type,label, errorMessage,...props}, ref) => {
-  
-  
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, type, label, errorMessage, ...props }, ref) => {
+    return (
+      <div className="space-y-2">
+        <label htmlFor="">{label}</label>
+        <input
+          type={type}
+          ref={ref}
+          {...props}
+        />
 
-  return (
-    <div className={styles.containerLabelInputErrorMessageStyle}>
-      <label  className={styles.labelStyle}>
-        <h6>{label}</h6>
-      </label>
-      <input 
-       
-        type={type}
-        //className={`${styles.inputStyle} ${errorMessage ? styles.error : ''} ${className}`}
-        ref={ref}
-        {...props}
-      />      
-     
-       // <span className={styles.errorMessageStyle}>{errorMessage}</span>
-      
-    </div>
-  )
-});
+        {errorMessage && (
+          <span
+          >
+            {errorMessage}
+          </span>
+        )}
+      </div>
+    )
+  },
+)
+Input.displayName = 'Input'
 
-Input.displayName = 'Input';
-
-export {Input};
+export { Input }

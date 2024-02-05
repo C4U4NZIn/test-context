@@ -1,71 +1,52 @@
-import { Controller , useFormContext } from "react-hook-form";
-import {registrationFormSchemaProps } from "../Forms/RegistrationForm";
-import { Input } from '../components/components-ui/Input';
+import { Controller, useFormContext } from 'react-hook-form'
 
-   export default function UserNameInformation () {
+import { Input } from '../components/components-ui/Input'
+import { RegistrationFormSchemaProps } from '../Forms/RegistrationForm'
 
-    const {
-     control,
-     formState:{errors}  
-     } = useFormContext<registrationFormSchemaProps>();
+export function PersonalInformation() {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<RegistrationFormSchemaProps>()
 
-
-
-     return (
-        <div>
-               
-          <fieldset>
-
-          
-
-         <Controller
-         name="userNameInformation.username"
-         defaultValue=""
-         control={control}
-         render={({field})=> (
-            <Input
+  return (
+    <fieldset
+      
+    >
+      <legend
+       
+      >
+        Step One
+      </legend>
+      <Controller
+        name='usernameNickname.username'
+        defaultValue=""
+        control={control}
+        render={({ field }) => (
+          <Input
             {...field}
             type="text"
-            label="Nome"
-            errorMessage={errors?.userNameInformation?.username?.message}
-           
-            />         
-          )
-         }
-         
-         />
-
-        
-
-         <Controller
-         name="userNameInformation.nickname"
-         defaultValue=""
-         control={control}
-         render={({field})=> (
-            <Input
+            label="Name"
+            errorMessage={errors?.usernameNickname?.username?.message}
+            
+          />
+        )}
+      />
+      <Controller
+        name='usernameNickname.nickname'
+        defaultValue=""
+        control={control}
+        render={({ field }) => (
+          <Input
             {...field}
             type="text"
             label="Nickname"
-            errorMessage={errors?.userNameInformation?.nickname?.message}
+            errorMessage={errors?.usernameNickname?.nickname?.message}
            
-            />         
-          )
-         }
-         
-         />
-
-        
-         
-         
-         
-
-          </fieldset>
-        
-    
-        </div>
-     )
-
-
-
-
+          />
+        )}
+      />
+     
+    </fieldset>
+  )
 }

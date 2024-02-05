@@ -1,16 +1,18 @@
-import * as zod from 'zod';
+import { z } from 'zod'
 
+export const userEmailTelSchema = z.object({
+  email: z
+  .string()
+  .email()
+  .refine(email=>/^[\w.+\-]+@gmail\.com$/.test(email),{
+   message:"O email deve ser um endereço gmail válido"
+  }),
+phone: z
+.string()
+.min(1, 'Phone is required')
+.max(20, 'Phone is invalid'),
+})
 
-export const schemaUserPasswordInformation = zod.object({
-
-    password: zod
-    .string()
-    .min(8,"Your password must be a 8 caracters"),
-
-    ConfirmPassword: zod
-    .string()
-    .min(8,'Your password must be a 8 caracters'),
-
-});
-
-export type userPasswordInformationsSchemaProps = zod.infer<typeof schemaUserPasswordInformation>
+export type UserEmailTelFormSchemaProps = z.infer<
+  typeof userEmailTelSchema
+>
