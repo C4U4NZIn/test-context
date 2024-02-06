@@ -1,8 +1,9 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
-
+import api from '../../__api';
 import { Button } from '../components/Button/Button'
+import { useEffect } from 'react';
 
 import { UserEmailTel } from '../components/UserEmailTel'
 import { UserPasswordConfirmPassword } from '../components/UserPasswordConfirmPassword.'
@@ -13,6 +14,7 @@ import {
   RegistrationFormTypeEnum,
   registrationFormSchema,
 } from '../Forms/RegistrationForm'
+import { resolve } from 'path';
 
 export function RegistrationFormSignIn() {
 
@@ -51,9 +53,31 @@ export function RegistrationFormSignIn() {
         setFormType(RegistrationFormTypeEnum.UserPasswordConfirmPassword)
         break
       case 'userPasswordConfirmPassword':
-        const UserData = getValues()
-        console.log('submit', UserData)
-        break
+        
+        const { usernameNickname,userEmailTel,userPasswordConfirmPassword } = getValues()
+        
+        const UserFinalDataSendedToApi = {
+        ...usernameNickname,...userEmailTel,
+        password: userPasswordConfirmPassword.password
+      }
+
+   
+      api.post('/post', {
+        username: UserFinalDataSendedToApi.username,
+        nickname:UserFinalDataSendedToApi.nickname,
+        email:UserFinalDataSendedToApi.email,
+        phone:UserFinalDataSendedToApi.phone,
+        password:UserFinalDataSendedToApi.password
+      }).then(resolve=>{
+        console.log(resolve.data);
+      }).catch((error)=>{
+        console.log(error);
+      })
+      
+   
+   
+       
+      break
     }
   }
 
